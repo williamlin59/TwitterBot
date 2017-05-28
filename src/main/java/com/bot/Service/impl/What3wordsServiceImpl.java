@@ -1,6 +1,6 @@
-package com.bot.Service.impl;
+package com.bot.service.impl;
 
-import com.bot.Service.What3wordsService;
+import com.bot.service.What3wordsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class What3wordsServiceImpl implements What3wordsService{
+public class What3wordsServiceImpl implements What3wordsService {
     private Logger log = LoggerFactory.getLogger(What3wordsServiceImpl.class);
 
     @Autowired

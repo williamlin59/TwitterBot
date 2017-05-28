@@ -1,15 +1,17 @@
 package com.bot.job;
 
-import com.bot.Service.TwitterService;
-import com.bot.Service.What3wordsService;
+
+import com.bot.service.GoogleMapService;
+import com.bot.service.TwitterService;
+import com.bot.service.What3wordsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @Component
@@ -21,10 +23,14 @@ public class TwitterJob {
 
     @Autowired
     private What3wordsService what3wordsService;
+
+    @Autowired
+    private GoogleMapService googleMapService;
     @Scheduled(fixedRate = 5000)
-    public void reportCurrentTime() {
+    public void reportCurrentTime() throws IOException {
 //        twitterService.tweet(LocalDateTime.now()+"");
-        what3wordsService.getLocation("plan.clips.a");
+//        what3wordsService.getLocation("plan.clips.a");
+        googleMapService.getMapImage("39.415413,-74.507625", "Absecon, New Jersey");
         log.info("The time is now {}", LocalDateTime.now());
     }
 }

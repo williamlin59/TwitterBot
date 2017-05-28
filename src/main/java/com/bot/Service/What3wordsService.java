@@ -1,4 +1,4 @@
-package com.bot.Service;
+package com.bot.service;
 
 import java.util.List;
 

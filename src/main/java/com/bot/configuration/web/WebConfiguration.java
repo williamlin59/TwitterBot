@@ -13,11 +13,11 @@ import org.springframework.web.client.RestTemplate;
 public class WebConfiguration {
     @Bean
     public RestTemplate restTemplateFactory(){
-       CloseableHttpClient httpClient = HttpClients.custom().setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
+        CloseableHttpClient httpClient =
+                HttpClients.custom().setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
         HttpComponentsClientHttpRequestFactory requestFactory
                 = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         return new RestTemplate(requestFactory);
-
     }
 }

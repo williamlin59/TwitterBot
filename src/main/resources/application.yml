@@ -15,3 +15,9 @@ twitter:
 what3words:
   url: https://api.what3words.com/v2/autosuggest
   apiKey: L7NRCXAQ
+
+googleMap:
+  url: https://maps.googleapis.com/maps/api/staticmap
+  apiKey: AIzaSyBHVWDKNHzV2vdcuMNLm2Nlve2qphLAtrM
+  zoom: 14
+  size: 640x480
