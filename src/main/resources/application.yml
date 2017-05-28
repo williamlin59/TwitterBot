@@ -1,6 +1,16 @@
 logging:
-    level:
-        ROOT: INFO
-    pattern:
-        console: %d{yyyy-MM-dd HH:mm:ss} - %msg%n
-        file: %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+  level:
+    ROOT: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+
+twitter:
+  consumerKey: 2MGnrxB4gmQwrcaGpoHcNE4zG
+  consumerSecret: 5EijMBN13Yd4d9oml6SLpI7Fj8oD7Knn9fAa23q7xYhz6RJuBx
+  accessToken: 132458550-80h35yjXHrIg2btXI7yozwVEhdRTgKc0Yv1dH7Us
+  accessTokenSecret: 8AyB3m4NUx98X7FQyzfWzXHRSSsdlCtWf8FkEQ9K22q1S
+
+what3words:
+  apiKey: L7NRCXAQ
