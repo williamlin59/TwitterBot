@@ -13,4 +13,5 @@ twitter:
   accessTokenSecret: 8AyB3m4NUx98X7FQyzfWzXHRSSsdlCtWf8FkEQ9K22q1S
 
 what3words:
+  url: https://api.what3words.com/v2/autosuggest
   apiKey: L7NRCXAQ
