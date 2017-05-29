@@ -25,3 +25,6 @@ googleMap:
 wordnik:
   url: http://api.wordnik.com:80/v4/words.json/randomWords
   apiKey: 6fdd5670d51652dae150406f02c0df9eb67e537b6bf1f4683
+
+job:
+  publishCron: 0 0/1 * 1/1 * ?

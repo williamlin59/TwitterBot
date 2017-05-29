@@ -1,10 +1,8 @@
 package com.bot.job;
 
 
-import com.bot.service.GoogleMapService;
-import com.bot.service.TwitterService;
-import com.bot.service.What3wordsService;
-import com.bot.service.WordnikService;
+import com.bot.domain.WordnikWord;
+import com.bot.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @EnableScheduling
@@ -30,12 +28,18 @@ public class TwitterJob {
 
     @Autowired
     private WordnikService wordnikService;
-    @Scheduled(fixedRate = 5000)
+
+    @Autowired
+    private ValidationService validationService;
+
+    @Scheduled(cron = "${job.publishCron}")
     public void reportCurrentTime() throws IOException {
-//        twitterService.tweet(LocalDateTime.now()+"");
-//        what3wordsService.getLocation("plan.clips.a");
-//        googleMapService.getMapImage("39.415413,-74.507625", "Absecon, New Jersey");
-        wordnikService.getThreeWords();
-        log.info("The time is now {}", LocalDateTime.now());
+
+        List<WordnikWord> wordnikWords;
+        while (validationService.validThreeWords(wordnikWords = wordnikService.getThreeWords())) {
+        }
+        what3wordsService.getLocation(wordnikWords);
+
+        log.info("The time is now {}", wordnikWords);
     }
 }

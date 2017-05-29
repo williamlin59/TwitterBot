@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -42,17 +43,17 @@ public class GoogleMapServiceImpl implements GoogleMapService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
         HttpEntity<byte[]> response = restTemplate.exchange
-                (getBuilder(location, center).build().encode().toUri(), HttpMethod.GET, new HttpEntity(headers), byte[].class);
+                (getBuilder(location, center), HttpMethod.GET, new HttpEntity(headers), byte[].class);
         log.info("Response content {}", response.getBody());
         Files.write(Paths.get("image.jpg"), response.getBody());
     }
 
-    private UriComponentsBuilder getBuilder(String location, String center) {
+    private URI getBuilder(String location, String center) {
         return UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("center", center)
                 .queryParam("zoom", zoom)
                 .queryParam("size", size)
                 .queryParam("markers", "color:red|label:S| " + location)
-                .queryParam("key", apiKey);
+                .queryParam("key", apiKey).build().encode().toUri();
     }
 }

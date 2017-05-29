@@ -1,5 +1,7 @@
 package com.bot.service.impl;
 
+import com.bot.domain.WordnikWord;
+import com.bot.repository.What3wordsRepository;
 import com.bot.service.What3wordsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -21,6 +24,9 @@ public class What3wordsServiceImpl implements What3wordsService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private What3wordsRepository what3wordsRepository;
+
     @Value("${what3words.url}")
     private String url;
 
@@ -28,20 +34,21 @@ public class What3wordsServiceImpl implements What3wordsService {
     private String apiKey;
 
     @Override
-    public List<String> getLocation(String keyWords) {
+    public List<String> getLocation(List<WordnikWord> words) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
+        String keyWords = what3wordsRepository.mapWordnikWordsToWhat3words(words);
         HttpEntity<String> response =restTemplate.exchange
-                (getBuilder(keyWords).build().encode().toUri(),HttpMethod.GET, new HttpEntity(headers), String.class);
+                (getBuilder(keyWords), HttpMethod.GET, new HttpEntity(headers), String.class);
         log.info("Location is {}",response.getBody());
         return null;
     }
 
-    private UriComponentsBuilder getBuilder(String keyWords){
+    private URI getBuilder(String keyWords) {
         return UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("addr",keyWords)
                 .queryParam("lang","en")
                 .queryParam("count", 1)
-                .queryParam("key",apiKey);
+                .queryParam("key", apiKey).build().encode().toUri();
     }
 }
