@@ -21,3 +21,7 @@ googleMap:
   apiKey: AIzaSyBHVWDKNHzV2vdcuMNLm2Nlve2qphLAtrM
   zoom: 14
   size: 640x480
+
+wordnik:
+  url: http://api.wordnik.com:80/v4/words.json/randomWords
+  apiKey: 6fdd5670d51652dae150406f02c0df9eb67e537b6bf1f4683

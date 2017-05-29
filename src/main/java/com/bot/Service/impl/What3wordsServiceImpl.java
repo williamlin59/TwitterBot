@@ -41,6 +41,7 @@ public class What3wordsServiceImpl implements What3wordsService {
         return UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("addr",keyWords)
                 .queryParam("lang","en")
+                .queryParam("count", 1)
                 .queryParam("key",apiKey);
     }
 }

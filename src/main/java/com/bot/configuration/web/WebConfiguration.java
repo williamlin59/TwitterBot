@@ -1,6 +1,7 @@
 package com.bot.configuration.web;
 
 
+import com.google.gson.Gson;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -19,5 +20,10 @@ public class WebConfiguration {
                 = new HttpComponentsClientHttpRequestFactory();
         requestFactory.setHttpClient(httpClient);
         return new RestTemplate(requestFactory);
+    }
+
+    @Bean
+    public Gson gsonFactory() {
+        return new Gson();
     }
 }
