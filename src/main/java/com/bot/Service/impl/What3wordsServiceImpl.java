@@ -34,14 +34,14 @@ public class What3wordsServiceImpl implements What3wordsService {
     private String apiKey;
 
     @Override
-    public List<String> getLocation(List<WordnikWord> words) {
+    public String getLocation(List<WordnikWord> words) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
         String keyWords = what3wordsRepository.mapWordnikWordsToWhat3words(words);
         HttpEntity<String> response =restTemplate.exchange
                 (getBuilder(keyWords), HttpMethod.GET, new HttpEntity(headers), String.class);
         log.info("Location is {}",response.getBody());
-        return null;
+        return response.getBody();
     }
 
     private URI getBuilder(String keyWords) {

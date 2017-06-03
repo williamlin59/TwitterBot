@@ -1,6 +1,8 @@
 package com.bot.service.impl;
 
 
+import com.bot.repository.GoogleMapRepository;
+import com.bot.service.FileService;
 import com.bot.service.GoogleMapService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +17,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @Service
 public class GoogleMapServiceImpl implements GoogleMapService {
@@ -24,6 +24,12 @@ public class GoogleMapServiceImpl implements GoogleMapService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private GoogleMapRepository googleMapRepository;
+
+    @Autowired
+    private FileService fileService;
 
     @Value("${googleMap.url}")
     private String url;
@@ -39,13 +45,15 @@ public class GoogleMapServiceImpl implements GoogleMapService {
 
 
     @Override
-    public void getMapImage(String location, String center) throws IOException {
+    public void getMapImage(String json) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", "application/json");
         HttpEntity<byte[]> response = restTemplate.exchange
-                (getBuilder(location, center), HttpMethod.GET, new HttpEntity(headers), byte[].class);
+                (getBuilder(googleMapRepository.getLocation(json),
+                        googleMapRepository.getCenter(json)),
+                        HttpMethod.GET, new HttpEntity(headers), byte[].class);
         log.info("Response content {}", response.getBody());
-        Files.write(Paths.get("image.jpg"), response.getBody());
+        fileService.saveImage("image.jpg", response.getBody());
     }
 
     private URI getBuilder(String location, String center) {
@@ -53,7 +61,7 @@ public class GoogleMapServiceImpl implements GoogleMapService {
                 .queryParam("center", center)
                 .queryParam("zoom", zoom)
                 .queryParam("size", size)
-                .queryParam("markers", "color:red|label:S| " + location)
+                //.queryParam("markers", "color:red|label:S| " + location)
                 .queryParam("key", apiKey).build().encode().toUri();
     }
 }

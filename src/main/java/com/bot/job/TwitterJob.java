@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @EnableScheduling
@@ -38,8 +39,10 @@ public class TwitterJob {
         List<WordnikWord> wordnikWords;
         while (validationService.validThreeWords(wordnikWords = wordnikService.getThreeWords())) {
         }
-        what3wordsService.getLocation(wordnikWords);
-
+        String json = what3wordsService.getLocation(wordnikWords);
+        googleMapService.getMapImage(json);
+        String words = wordnikWords.stream().map(WordnikWord::getWord).collect(Collectors.joining(","));
+        twitterService.tweet(words, "image.jpg");
         log.info("The time is now {}", wordnikWords);
     }
 }

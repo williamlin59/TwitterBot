@@ -26,4 +26,5 @@ public class WebConfiguration {
     public Gson gsonFactory() {
         return new Gson();
     }
+
 }
